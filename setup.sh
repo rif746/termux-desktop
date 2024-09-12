@@ -42,6 +42,7 @@ banner() {
 		${RED}│${GREEN}░░░░▀░░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀░░░▀▀░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░░░${RED}│
 		${RED}└──────────────────────────────────────────────────────────┘
 		${BLUE}By : Aditya Shakya // @adi1090x
+		${BLUE}Modified By : Syarif Ubaidillah // @rif746
 	EOF
 }
 
@@ -53,11 +54,11 @@ usage() {
 }
 
 ## Update, X11-repo, Program Installation
-_pkgs=(bc bmon calc calcurse curl dbus desktop-file-utils elinks feh fontconfig-utils fsmon \
-		geany git gtk2 gtk3 htop imagemagick jq leafpad man mpc mpd mutt ncmpcpp \
-		ncurses-utils neofetch netsurf obconf openbox openssl-tool polybar ranger rofi \
-		startup-notification termux-api thunar tigervnc vim wget xarchiver xbitmaps xcompmgr \
-		xfce4-settings xfce4-terminal xmlstarlet xorg-font-util xorg-xrdb zsh)
+_pkgs=(bc bmon calc calcurse curl dbus desktop-file-utils elinks feh firefox fontconfig-utils fsmon \
+		geany git gtk2 gtk3 htop imagemagick jq kitty leafpad man mpc mpd mutt ncmpcpp \
+		ncurses-utils neofetch obconf openbox openssl-tool polybar ranger rofi \
+		startup-notification termux-api termux-x11-nightly thunar vim wget xarchiver xbitmaps xcompmgr \
+		xfce4-settings xmlstarlet xorg-font-util xorg-xrdb zsh)
 
 setup_base() {
 	echo -e ${RED}"\n[*] Installing Termux Desktop..."
@@ -82,11 +83,11 @@ setup_base() {
 }
 
 ## Setup OMZ and Termux Configs
-setup_omz() {
+setup_zsh() {
 	# backup previous termux and omz files
-	echo -e ${RED}"[*] Setting up OMZ and termux configs..."
-	omz_files=(.oh-my-zsh .termux .zshrc)
-	for file in "${omz_files[@]}"; do
+	echo -e ${RED}"[*] Setting up ZSH and termux configs..."
+	config_files=(.termux .zshrc)
+	for file in "${config_files[@]}"; do
 		echo -e ${CYAN}"\n[*] Backing up $file..."
 		if [[ -f "$HOME/$file" || -d "$HOME/$file" ]]; then
 			{ reset_color; mv -u ${HOME}/${file}{,.old}; }
@@ -94,95 +95,19 @@ setup_omz() {
 			echo -e ${MAGENTA}"\n[!] $file Doesn't Exist."			
 		fi
 	done
-	# installing omz
-	echo -e ${CYAN}"\n[*] Installing Oh-my-zsh... \n"
-	{ reset_color; git clone https://github.com/robbyrussell/oh-my-zsh.git --depth 1 $HOME/.oh-my-zsh; }
-	cp $HOME/.oh-my-zsh/templates/zshrc.zsh-template $HOME/.zshrc
-	sed -i -e 's/ZSH_THEME=.*/ZSH_THEME="aditya"/g' $HOME/.zshrc
 
-	# ZSH theme
-	cat > $HOME/.oh-my-zsh/custom/themes/aditya.zsh-theme <<- _EOF_
-		# Default OMZ theme
-
-		if [[ "\$USER" == "root" ]]; then
-		  PROMPT="%(?:%{\$fg_bold[red]%}%{\$fg_bold[yellow]%}%{\$fg_bold[red]%} :%{\$fg_bold[red]%} )"
-		  PROMPT+='%{\$fg[cyan]%}  %c%{\$reset_color%} \$(git_prompt_info)'
-		else
-		  PROMPT="%(?:%{\$fg_bold[red]%}%{\$fg_bold[green]%}%{\$fg_bold[yellow]%} :%{\$fg_bold[red]%} )"
-		  PROMPT+='%{\$fg[cyan]%}  %c%{\$reset_color%} \$(git_prompt_info)'
-		fi
-
-		ZSH_THEME_GIT_PROMPT_PREFIX="%{\$fg_bold[blue]%}  git:(%{\$fg[red]%}"
-		ZSH_THEME_GIT_PROMPT_SUFFIX="%{\$reset_color%} "
-		ZSH_THEME_GIT_PROMPT_DIRTY="%{\$fg[blue]%}) %{\$fg[yellow]%}✗"
-		ZSH_THEME_GIT_PROMPT_CLEAN="%{\$fg[blue]%})"
-	_EOF_
-	# Append some aliases
-	cat >> $HOME/.zshrc <<- _EOF_
-		#------------------------------------------
-		alias l='ls -lh'
-		alias ll='ls -lah'
-		alias la='ls -a'
-		alias ld='ls -lhd'
-		alias p='pwd'
-
-		#alias rm='rm -rf'
-		alias u='cd $PREFIX'
-		alias h='cd $HOME'
-		alias :q='exit'
-		alias grep='grep --color=auto'
-		alias open='termux-open'
-		alias lc='lolcat'
-		alias xx='chmod +x'
-		alias rel='termux-reload-settings'
-
-		#------------------------------------------
-
-		# SSH Server Connections
-
-		# linux (Arch)
-		#alias arch='ssh UNAME@IP -i ~/.ssh/id_rsa.DEVICE'
-
-		# linux sftp (Arch)
-		#alias archfs='sftp -i ~/.ssh/id_rsa.DEVICE UNAME@IP'
-	_EOF_
+	# configuring zsh
+	echo -e ${CYAN}"\n[*] Configuring ZSH..."
+	ln -s $HOME/.config/zsh/zshrc ~/.zshrc
+	ln -s $HOME/.config/zsh/zshenv ~/.zshenv
+	ln -s $HOME/.config/zsh/zprofile ~/.zprofile
 
 	# configuring termux
 	echo -e ${CYAN}"\n[*] Configuring Termux..."
 	if [[ ! -d "$HOME/.termux" ]]; then
 		mkdir $HOME/.termux
 	fi
-	# copy font
-	cp $(pwd)/files/.fonts/icons/dejavu-nerd-font.ttf $HOME/.termux/font.ttf
-	# color-scheme
-	cat > $HOME/.termux/colors.properties <<- _EOF_
-		background 		: #263238
-		foreground 		: #eceff1
 
-		color0  			: #263238
-		color8  			: #37474f
-		color1  			: #ff9800
-		color9  			: #ffa74d
-		color2  			: #8bc34a
-		color10 			: #9ccc65
-		color3  			: #ffc107
-		color11 			: #ffa000
-		color4  			: #03a9f4
-		color12 			: #81d4fa
-		color5  			: #e91e63
-		color13 			: #ad1457
-		color6  			: #009688
-		color14 			: #26a69a
-		color7  			: #cfd8dc
-		color15 			: #eceff1
-	_EOF_
-	# button config
-	cat > $HOME/.termux/termux.properties <<- _EOF_
-		extra-keys = [ \\
-		 ['ESC','|', '/', '~','HOME','UP','END'], \\
-		 ['CTRL', 'TAB', '=', '-','LEFT','DOWN','RIGHT'] \\
-		]	
-	_EOF_
 	# change shell and reload configs
 	{ chsh -s zsh; } \
 	&& { echo -e "${GREEN}Changed shell to /bin/zsh"; } \
@@ -233,30 +158,6 @@ setup_config() {
 	fi
 }
 
-## Setup VNC Server
-setup_vnc() {
-	# backup old dir
-	if [[ -d "$HOME/.vnc" ]]; then
-		mv $HOME/.vnc{,.old}
-	fi
-	echo -e ${RED}"\n[*] Setting up VNC Server..."
-	{ reset_color; vncserver -localhost; }
-	sed -i -e 's/# geometry=.*/geometry=1366x768/g' $HOME/.vnc/config
-	cat > $HOME/.vnc/xstartup <<- _EOF_
-		#!/data/data/com.termux/files/usr/bin/bash
-		## This file is executed during VNC server
-		## startup.
-
-		# Launch Openbox Window Manager.
-		openbox-session &
-	_EOF_
-        chmod u+rx $HOME/.vnc/xstartup
-	if [[ $(pidof Xvnc) ]]; then
-		    echo -e ${ORANGE}"[*] Server Is Running..."
-		    { reset_color; vncserver -list; }
-	fi
-}
-
 ## Create Launch Script
 setup_launcher() {
 	file="$HOME/.local/bin/startdesktop"
@@ -269,21 +170,11 @@ setup_launcher() {
 		#!/data/data/com.termux/files/usr/bin/bash
 
 		# Export Display
-		export DISPLAY=":1"
+		export DISPLAY=":0"
 
-		# Start VNC Server
-		if [[ \$(pidof Xvnc) ]]; then
-		    echo -e "\\n[!] Server Already Running."
-		    { vncserver -list; echo; }
-		    read -p "Kill VNC Server? (Y/N) : "
-		    if [[ "\$REPLY" == "Y" || "\$REPLY" == "y" ]]; then
-		        { killall Xvnc; echo; }
-		    else
-		        echo
-		    fi
-		else
-		    echo -e "\\n[*] Starting VNC Server..."
-		    vncserver
+		# Start Termux:X11 Server
+		if [[ -z \$(pidof termux-x11) ]]; then
+			termux-x11 :0&
 		fi
 	_EOF_
 	if [[ -f "$file" ]]; then
@@ -304,11 +195,7 @@ setup_launcher() {
 post_msg() {
 	echo -e ${GREEN}"\n[*] ${RED}Termux Desktop ${GREEN}Installed Successfully.\n"
 	cat <<- _MSG_
-		[-] Restart termux and enter ${ORANGE}startdesktop ${GREEN}command to start the VNC server.
-		[-] In VNC client, enter ${ORANGE}127.0.0.1:5901 ${GREEN}as Address and Password you created to connect.	
-		[-] To connect via PC over Wifi or Hotspot, use it's IP, ie: ${ORANGE}192.168.43.1:5901 ${GREEN}to connect. Also, use TigerVNC client.	
-		[-] Make sure you enter the correct port. ie: If server is running on ${ORANGE}Display :2 ${GREEN}then port is ${ORANGE}5902 ${GREEN}and so on.
-		  
+		[-] Restart termux and enter ${ORANGE}startdesktop ${GREEN}command to start the Termux:X11 server.
 	_MSG_
 	{ reset_color; exit 0; }
 	
@@ -320,9 +207,8 @@ post_msg() {
 install_td() {
 	banner
 	setup_base
-	setup_omz
 	setup_config
-	setup_vnc
+	setup_zsh
 	setup_launcher
 	post_msg
 }
@@ -340,8 +226,8 @@ uninstall_td() {
 	
 	# delete files
 	echo -e ${CYAN}"\n[*] Deleting config files...\n"
-	_homefiles=(.fehbg .icons .mpd .ncmpcpp .fonts .gtkrc-2.0 .mutt .themes .vnc Music)
-	_configfiles=(Thunar geany  gtk-3.0 leafpad netsurf openbox polybar ranger rofi xfce4)
+	_homefiles=(.fehbg .icons .mpd .ncmpcpp .fonts .gtkrc-2.0 .mutt .themes)
+	_configfiles=(Thunar geany  gtk-3.0 leafpad openbox polybar ranger rofi xfce4)
 	_localfiles=(bin lib 'share/backgrounds' 'share/pixmaps')
 	for i in "${_homefiles[@]}"; do
 		if [[ -f "$HOME/$i" || -d "$HOME/$i" ]]; then

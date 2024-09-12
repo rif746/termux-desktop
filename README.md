@@ -1,9 +1,3 @@
-**`LAST Updated`** : `August 2023`
-
-> Unmaintained : Due to Termux not working properly on new Android versions and also Termux not getting maintained properly.
-
----
-
 ![logo](./previews/logo.png) <br />
 
 <p align="center">
@@ -41,8 +35,8 @@ Install `Termux` & `Termux:API` on your phone. It's recommended to install *Term
 
 > This setup is created and tested on :
 >
-> Device - **Redmi Note 9 Pro** <br />
-> Android - **Android 10 (Q)** <br />
+> Device - **Huawei Matepad SE 10.4 (2022)** <br />
+> Android - **Android 12** <br />
 > CPU Type - **aarch64**
 
 ### Installation
@@ -50,11 +44,13 @@ Install `Termux` & `Termux:API` on your phone. It's recommended to install *Term
 After installing both applications above, open `Termux` and follow the steps below -
 
 - Update termux packages and install `git`
+
 ```
 pkg upgrade && pkg install git
 ```
 
 - Clone this repository
+
 ```
 git clone --depth=1 https://github.com/adi1090x/termux-desktop.git
 ```
@@ -62,6 +58,7 @@ git clone --depth=1 https://github.com/adi1090x/termux-desktop.git
 > **Warning** : I'm assuming that you're doing this on a fresh termux install. If not, I'll suggest you to do so. However the `setup.sh` script backup every file it replace, It's still recommended that you manually backup your files in order to avoid conflicts. <br />
 
 - Change to cloned directory and run `setup.sh` with *--install* option
+
 ```
 cd termux-desktop
 chmod +x setup.sh
@@ -71,6 +68,7 @@ chmod +x setup.sh
 > If script `setup.sh` fails during package installation (due to network issues), you can re-execute it again.
 
 - During installation, you'll be asked to set up password for **VNC** -
+
 ```
 [*] Setting up VNC Server...
 
@@ -83,7 +81,9 @@ Would you like to enter a view-only password (y/n)? n
 
 > Note that passwords are not visible when you are typing them and minimum password length is 6 characters.
 > Remember the password you typed as it'll be required to connect via vnc client.
+
 - If everything is okay, you will see this message -
+
 ```
 New 'localhost:1 ()' desktop is localhost:1
 
@@ -99,9 +99,11 @@ TigerVNC server sessions:
 X DISPLAY #     PROCESS ID
 :1              XXXXX
 ```
+
 > It means that X (vnc) server is available on display 'localhost:1'. <br />
 
 That's it. `Termux Desktop` is installed successfully. *Restart Termux* and enter `startdesktop` command to start *vncserver* and connect via VNC Client. <br />
+
 ```
 startdesktop
 
@@ -116,6 +118,7 @@ Log file is /data/data/com.termux/files/home/.vnc/localhost:1.log
 ### Uninstallation
 
 If you ever want to uninstall Termux Desktop, just run `setup.sh` with *--uninstall* option. Just keep the `setup.sh` script and delete the cloned repository to save space. I'll create a separate uninstaller script later. The command below will remove all the packages and delete all the config files it installed, including the changes you've made. So, Be careful there...
+
 ```
 ./setup.sh --uninstall
 ```
@@ -127,6 +130,7 @@ Now you need a VNC client app to connect to server. I'm using this Android VNC c
 Determine port number on which VNC server listens. It can be calculated like this: 5900 + {display number}. So for display 'localhost:1' the port will be 5901. <br />
 
 Now open the VNC Viewer application and create a new connection with the following information (assuming that port is 5901) - <br />
+
 ```
 Address:
 127.0.0.1:5901
@@ -134,13 +138,14 @@ Address:
 Name:
 Termux
 ```
+
 Now launch it. You will be prompted for `password` that you entered during installation. After entering password, you'll be headed directly to this desktop - <br />
 
 ![desktop](./previews/desk_1.png) <br />
 
 ### First Impression
 
-Let's take a look at following installed programs you'll get here - 
+Let's take a look at following installed programs you'll get here -
 
 |File Manager|Text Editor/IDE|
 |--|--|
@@ -158,7 +163,7 @@ Let's take a look at following installed programs you'll get here -
 |--|--|--|--|
 |![img](./previews/desk_8.png)|![img](./previews/desk_9.png)|![img](./previews/desk_10.png)|![img](./previews/desk_11.png)|
 
-Rofi Application launcher and Applets - 
+Rofi Application launcher and Applets -
 
 |App Launcher|Music Player|
 |--|--|
@@ -182,7 +187,7 @@ There are total *Eight different styles/themes* available in this setup. To chan
 
 ### Applications of `Termux Desktop`
 
-Well, These are some ideas or things you can do with termux desktop. From Learning coding to Penetration testing, Chatting over IRC to Browsing web and Downloading file, Playing classic retro games to run Windows from 90s. 
+Well, These are some ideas or things you can do with termux desktop. From Learning coding to Penetration testing, Chatting over IRC to Browsing web and Downloading file, Playing classic retro games to run Windows from 90s.
 
 - Learn and practice you coding skill without having a laptop
 
@@ -218,7 +223,7 @@ Well, These are some ideas or things you can do with termux desktop. From Learni
 |--|--|
 |![img](./previews/app_11.png)|![img](./previews/app_12.png)|
 
-You'll probably get the idea of possible things you can do with Termux and how Termux Desktop makes it more easy. 
+You'll probably get the idea of possible things you can do with Termux and how Termux Desktop makes it more easy.
 
 ### Keybindings
 
@@ -254,14 +259,14 @@ Here's some shortcut keys you want to use to speed up your work. For more, `Righ
 ### Additional Tools
 
 You can install additional tools for termux, to make it visually look good.
+
 1. [Oh my zsh](https://github.com/adi1090x/termux-omz), Setup zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) framework. (Already Added in this setup)
-2. [Termux style](https://github.com/adi1090x/termux-style), Change color and fonts in termux.
+1. [Termux style](https://github.com/adi1090x/termux-style), Change color and fonts in termux.
 
 ### FYI
 
 - If you face any problem or get any error, you can create an issue & i'll try to help.
 - Edit `~/.local/bin/email` and put your Email ID and Password (Use an App password) to show unread mails on polybar.
 - You may need to edit some config files accoring to your need (`~/.mutt/muttrc`, `~/.gitconfig`)
-- Don't Email or DM me to ask how to hack, I ain't a Hacker. 
+- Don't Email or DM me to ask how to hack, I ain't a Hacker.
 - Have Fun, Share this repository with your friends.
-

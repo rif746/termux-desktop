@@ -4,12 +4,12 @@
 <!--	<separator label="Main Menu"/>  -->
 		<item label="Terminal Emulator">
 			<action name="Execute">
-				<command>xfce4-terminal</command>
+				<command>kitty</command>
 			</action>
 		</item>
 		<item label="Web Browser">
 			<action name="Execute">
-				<command>netsurf-gtk3</command>
+				<command>firefox</command>
 			</action>
 		</item>
 		<item label="File Manager">
@@ -26,79 +26,69 @@
 		<menu id="root-menu-srct" label="Terminal">
 			<item label="Vim">
 				<action name="Execute">
-					<execute>xfce4-terminal -e vim</execute>
+					<execute>kitty -e vim</execute>
 				</action>
 			</item>
 			<item label="Nano">
 				<action name="Execute">
-					<execute>xfce4-terminal -e nano</execute>
+					<execute>kitty -e nano</execute>
 				</action>
 			</item>
 			<item label="Ranger">
 				<action name="Execute">
-					<execute>xfce4-terminal -e ranger</execute>
+					<execute>kitty -e ranger</execute>
 				</action>
 			</item>
 			<item label="Htop">
 				<action name="Execute">
-					<execute>xfce4-terminal -e htop</execute>
-				</action>
-			</item>
-			<item label="Ncmpcpp">
-				<action name="Execute">
-					<execute>xfce4-terminal -e ncmpcpp</execute>
-				</action>
-			</item>
-			<item label="Mutt">
-				<action name="Execute">
-					<execute>xfce4-terminal -e mutt</execute>
+					<execute>kitty -e htop</execute>
 				</action>
 			</item>
 			<item label="Elinks">
 				<action name="Execute">
-					<execute>xfce4-terminal -e elinks</execute>
+					<execute>kitty -e elinks</execute>
 				</action>
 			</item>
 		</menu>
 		<menu id="root-menu-8399" label="Quick Links">
 			<item label="DuckDuckGo">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://start.duckduckgo.com/</execute>
+					<execute>firefox https://start.duckduckgo.com/</execute>
 				</action>
 			</item>
 			<item label="Google">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://www.google.com</execute>
+					<execute>firefox https://www.google.com</execute>
 				</action>
 			</item>
 			<item label="Wikipedia">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://www.wikipedia.org</execute>
+					<execute>firefox https://www.wikipedia.org</execute>
 				</action>
 			</item>
 			<item label="Termux">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://wiki.termux.com/wiki/Main_Page</execute>
+					<execute>firefox https://wiki.termux.com/wiki/Main_Page</execute>
 				</action>
 			</item>
 			<item label="Twitter">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://www.twitter.com</execute>
+					<execute>firefox https://www.twitter.com</execute>
 				</action>
 			</item>
 			<item label="GitHub">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://www.github.com</execute>
+					<execute>firefox https://www.github.com</execute>
 				</action>
 			</item>
 			<item label="Reddit">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://www.reddit.com</execute>
+					<execute>firefox https://www.reddit.com</execute>
 				</action>
 			</item>
 			<item label="Stackoverflow">
 				<action name="Execute">
-					<execute>netsurf-gtk3 https://stackoverflow.com/questions</execute>
+					<execute>firefox https://stackoverflow.com/questions</execute>
 				</action>
 			</item>
 		</menu>
